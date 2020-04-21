@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WMPLib;
 
 namespace SnakeProject
 {
@@ -25,6 +27,20 @@ namespace SnakeProject
 			Point food = foodCreator.CreateFood();
 			food.Draw();
 
+			Params settings = new Params();
+			Sounds sound = new Sounds(settings.GetResourceFolder());
+			sound.Play();
+
+			Sounds sound1 = new Sounds(settings.GetResourceFolder());
+
+			//Score
+			Score score = new Score(settings.GetResourceFolder());
+
+			//Timer
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+
+
 			while (true)
 			{
 				if (walls.IsHit(snake) || snake.IsHitTail())
@@ -34,7 +50,10 @@ namespace SnakeProject
 				if (snake.Eat(food))
 				{
 					food = foodCreator.CreateFood();
-					food.Draw();
+					food.Draw(ConsoleColor.Red);
+					sound1.PlayEat();
+					score.UpCurrentPoints();
+					score.ShowCurrentPoints();
 				}
 				else
 				{
