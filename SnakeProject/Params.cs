@@ -19,9 +19,4 @@ namespace SnakeProject
             resourcesFolder = binFolder + "resources\\";
         }
     }
-
-    public string GetResourceFolder()
-    {
-        return resourcesFoler;
-    }
 }

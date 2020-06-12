@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using VisioForge.Shared.MediaFoundation.OPM;
 using WMPLib;
 
 namespace SnakeProject
@@ -27,18 +29,41 @@ namespace SnakeProject
 			Point food = foodCreator.CreateFood();
 			food.Draw();
 
-			Params settings = new Params();
-			Sounds sound = new Sounds(settings.GetResourceFolder());
-			sound.Play();
+			//Очки
+			Score score = new Score(0);
+			if (snake.Eat(food))
+			{
+				Console.ForegroundColor = ConsoleColor.Green;
+				food = foodCreator.CreateFood();
+				food.Draw();
+			
+			}
+			else
+			{
+				Console.ForegroundColor = ConsoleColor.Green;
+				snake.Move();
+			}
+			
 
-			Sounds sound1 = new Sounds(settings.GetResourceFolder());
 
-			//Score
-			Score score = new Score(settings.GetResourceFolder());
+			int time = 100;
+			Thread.Sleep(time);
 
-			//Timer
+			//Время
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
+
+			//Имя
+			string name;
+
+
+
+			Console.Write("Type your name: ");
+			name = Console.ReadLine();
+
+
+
+
 
 
 			while (true)
@@ -50,10 +75,8 @@ namespace SnakeProject
 				if (snake.Eat(food))
 				{
 					food = foodCreator.CreateFood();
-					food.Draw(ConsoleColor.Red);
-					sound1.PlayEat();
-					score.UpCurrentPoints();
-					score.ShowCurrentPoints();
+					food.Draw();
+
 				}
 				else
 				{
@@ -72,17 +95,17 @@ namespace SnakeProject
 		}
 
 
-		static void WriteGameOver()
+		static void WriteGameOver() //Конец игры
 		{
 			int xOffset = 25;
 			int yOffset = 8;
-			Console.ForegroundColor = ConsoleColor.Red;
+			Console.ForegroundColor = ConsoleColor.Green;
 			Console.SetCursorPosition(xOffset, yOffset++);
-			WriteText("============================", xOffset, yOffset++);
-			WriteText("ИГРА ОКОНЧЕНА", xOffset + 1, yOffset++);
+			WriteText("----------------------------", xOffset, yOffset++);
+			WriteText("Игра окончена", xOffset + 1, yOffset++);
 			yOffset++;
 			WriteText("Автор: Alisa Krupenko", xOffset + 2, yOffset++);
-			WriteText("============================", xOffset, yOffset++);
+			WriteText("----------------------------", xOffset, yOffset++);
 		}
 
 		static void WriteText(String text, int xOffset, int yOffset)
@@ -91,7 +114,8 @@ namespace SnakeProject
 			Console.WriteLine(text);
 		}
 
-	}
 }
+}
+
 
 

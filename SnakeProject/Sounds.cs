@@ -18,7 +18,7 @@ namespace SnakeProject
         }
         public void Play()
         {
-            player.URL = pathToMedia + "stardust.mp3";
+            player.URL = pathToMedia + ".mp3";
             player.settings.volume = 30;
             player.controls.play();
             player.settings.setMode("loop", true);
@@ -32,7 +32,7 @@ namespace SnakeProject
 
         public void PlayEat()
         {
-            player.URL = pathToMedia + "click.mp3";
+            player.URL = pathToMedia + ".mp3";
             player.settings.volume = 100;
             player.controls.play();
         }
